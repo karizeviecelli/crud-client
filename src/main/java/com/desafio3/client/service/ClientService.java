@@ -1,7 +1,5 @@
 package com.desafio3.client.service;
 
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,5 +30,15 @@ public class ClientService {
         return result.map(x -> new ClientDto(x));
     }
 
- 
+    @Transactional
+    public ClientDto insert(ClientDto dto) {
+        Client entity = new Client();
+        entity.setName(dto.getName());
+        entity.setCpf(dto.getCpf());
+        entity.setBirthDate(dto.getBirthDate());
+        entity = repository.save(entity);
+        return new ClientDto(entity);
+
+    }
+
 }
