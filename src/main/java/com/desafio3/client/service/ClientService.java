@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.desafio3.client.dto.ClientDto;
 import com.desafio3.client.entities.Client;
 import com.desafio3.client.repository.ClientRepository;
+import com.desafio3.client.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
@@ -20,7 +21,7 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDto findById(Long id) {
-        Client client = repository.findById(id).get();
+        Client client = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Recurso não encontrrado"));
         return new ClientDto(client);
     }
 
